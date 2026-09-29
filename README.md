@@ -2,8 +2,8 @@
 
 Application de **numérisation d'un recueil de chants** : une **API REST Spring Boot** pour gérer les chants (titre, auteur, langue, tonalité, paroles, catégorie) avec une recherche plein texte, et une interface **Angular** pour les consulter, les rechercher et les éditer.
 
-![Backend](https://github.com/JODoomsdaY/chants-springboot-angular/actions/workflows/backend.yml/badge.svg)
-![Frontend](https://github.com/JODoomsdaY/chants-springboot-angular/actions/workflows/frontend.yml/badge.svg)
+![Backend](https://github.com/JODoomsdaY/recueil-de-chants/actions/workflows/backend.yml/badge.svg)
+![Frontend](https://github.com/JODoomsdaY/recueil-de-chants/actions/workflows/frontend.yml/badge.svg)
 
 > Projet personnel inspiré de mon stage chez ABZ Technologies (Lomé, 2023), où j'ai développé une application de numérisation de chants avec Spring Boot, Angular et MySQL. Le code de ce dépôt est entièrement réécrit ; les chants d'exemple ont été rédigés pour le projet.
 
