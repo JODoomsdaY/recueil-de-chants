@@ -1,0 +1,65 @@
+<a routerLink="/chants" class="back">← Retour au recueil</a>
+<h1>{{ id() ? 'Modifier le chant' : 'Nouveau chant' }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="enregistrer()" class="chant-form">
+  <div class="row">
+    <label>
+      N°
+      <input type="number" formControlName="numero" min="1" />
+    </label>
+    <label class="grow">
+      Titre *
+      <input formControlName="titre" />
+      @if (invalide('titre')) {
+        <small class="error">Le titre est obligatoire.</small>
+      }
+    </label>
+  </div>
+
+  <div class="row">
+    <label class="grow">
+      Auteur / compositeur
+      <input formControlName="auteur" />
+    </label>
+    <label>
+      Tonalité
+      <input formControlName="tonalite" placeholder="ex. Ré majeur" />
+    </label>
+  </div>
+
+  <div class="row">
+    <label class="grow">
+      Catégorie
+      <select formControlName="categorieId">
+        <option [ngValue]="null">Sans catégorie</option>
+        @for (c of categories(); track c.id) {
+          <option [ngValue]="c.id">{{ c.nom }}</option>
+        }
+      </select>
+    </label>
+    <label class="grow">
+      Langue *
+      <select formControlName="langue">
+        @for (l of langues | keyvalue; track l.key) {
+          <option [ngValue]="l.key">{{ l.value }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  <label>
+    Paroles *
+    <textarea formControlName="paroles" rows="14" placeholder="Couplets et refrain, une ligne vide entre chaque strophe"></textarea>
+    @if (invalide('paroles')) {
+      <small class="error">Les paroles sont obligatoires.</small>
+    }
+  </label>
+
+  @if (erreur()) {
+    <p class="alert">{{ erreur() }}</p>
+  }
+
+  <div class="actions">
+    <button type="submit" class="primary" [disabled]="envoi()">Enregistrer</button>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: chants-api
+  datasource:
+    url: jdbc:h2:file:./data/chants;AUTO_SERVER=TRUE
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8080
+
+app:
+  cors:
+    allowed-origins: http://localhost:4200
+  seed: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

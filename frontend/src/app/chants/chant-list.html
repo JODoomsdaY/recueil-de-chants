@@ -1,0 +1,61 @@
+<section class="toolbar">
+  <input
+    type="search"
+    placeholder="Rechercher un titre, un auteur ou des paroles…"
+    aria-label="Rechercher"
+    [ngModel]="q"
+    (ngModelChange)="onSaisie($event)"
+  />
+  <select aria-label="Catégorie" [(ngModel)]="categorieId" (ngModelChange)="rechercher(0)">
+    <option [ngValue]="null">Toutes les catégories</option>
+    @for (c of categories(); track c.id) {
+      <option [ngValue]="c.id">{{ c.nom }}</option>
+    }
+  </select>
+  <select aria-label="Langue" [(ngModel)]="langue" (ngModelChange)="rechercher(0)">
+    <option [ngValue]="null">Toutes les langues</option>
+    @for (l of langues | keyvalue; track l.key) {
+      <option [ngValue]="l.key">{{ l.value }}</option>
+    }
+  </select>
+  <a class="button primary" routerLink="/chants/nouveau">+ Nouveau chant</a>
+</section>
+
+@if (erreur()) {
+  <p class="alert">{{ erreur() }}</p>
+}
+
+@if (resultats(); as r) {
+  <p class="muted">{{ r.totalElements }} chant(s)</p>
+
+  <ul class="chant-list">
+    @for (chant of r.contenu; track chant.id) {
+      <li>
+        <a [routerLink]="['/chants', chant.id]">
+          <span class="numero">{{ chant.numero ?? '—' }}</span>
+          <span class="infos">
+            <strong>{{ chant.titre }}</strong>
+            <small>
+              {{ chant.auteur || 'Auteur inconnu' }} · {{ nomLangue(chant.langue) }}
+              @if (chant.categorie) {
+                · {{ chant.categorie.nom }}
+              }
+            </small>
+          </span>
+        </a>
+      </li>
+    } @empty {
+      <li class="empty">Aucun chant ne correspond à la recherche.</li>
+    }
+  </ul>
+
+  @if (r.totalPages > 1) {
+    <nav class="pagination" aria-label="Pagination">
+      <button (click)="rechercher(page - 1)" [disabled]="page === 0">← Précédent</button>
+      <span>Page {{ page + 1 }} / {{ r.totalPages }}</span>
+      <button (click)="rechercher(page + 1)" [disabled]="page + 1 >= r.totalPages">Suivant →</button>
+    </nav>
+  }
+} @else if (chargement()) {
+  <p class="muted">Chargement…</p>
+}

@@ -1,0 +1,12 @@
+# Lancement : mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:chants}?createDatabaseIfNotExist=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: false

@@ -1,0 +1,30 @@
+<a routerLink="/chants" class="back">← Retour au recueil</a>
+
+@if (erreur()) {
+  <p class="alert">{{ erreur() }}</p>
+}
+
+@if (chant(); as c) {
+  <article class="chant">
+    <header>
+      <p class="muted">
+        @if (c.numero) {
+          N° {{ c.numero }} ·
+        }
+        {{ c.categorie?.nom ?? 'Sans catégorie' }} · {{ nomLangue(c.langue) }}
+        @if (c.tonalite) {
+          · Tonalité : {{ c.tonalite }}
+        }
+      </p>
+      <h1>{{ c.titre }}</h1>
+      <p class="muted">{{ c.auteur || 'Auteur inconnu' }}</p>
+    </header>
+
+    <pre class="paroles">{{ c.paroles }}</pre>
+
+    <footer class="actions">
+      <a class="button" [routerLink]="['/chants', c.id, 'modifier']">Modifier</a>
+      <button class="danger" (click)="supprimer(c)">Supprimer</button>
+    </footer>
+  </article>
+}
